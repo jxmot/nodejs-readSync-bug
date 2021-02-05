@@ -1,0 +1,11 @@
+{
+  "name": "nodejs-readsync-bug",
+  "version": "1.0.0",
+  "description": "A small app that demonstrates a readSync() bug in Node.js v12.16.1",
+  "main": "bugdemo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "https://github.com/jxmot",
+  "license": "MIT"
+}
