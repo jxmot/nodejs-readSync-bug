@@ -21,7 +21,7 @@ if(demobug === true) {
     var fd = fs.openSync(path+filename, 'r');
     console.log(`opened fd(${fd}) ${path}${filename}`);
     var buff = Buffer.alloc(size+10);
-    var rdqty = fs.readSync(fd, buff, 'utf8');
+    var rdqty = fs.readSync(fd, buff);
     // rdqty will always be zero
     console.log(`readSync - fd(${fd}) ${path}${filename} - returned: ${rdqty}`);
     fs.closeSync(fd);
@@ -29,9 +29,7 @@ if(demobug === true) {
 } else {
     var logstr = fs.readFileSync(path+filename, 'utf8');         
     var rdqty = logstr.length;
-    console.log(`readFileSync - ${path}${filename} - size of data: ${rdqty}`);
+    console.log(`readFileSync - ${path}${filename} - size of data read from file: ${rdqty}`);
 }
 
-
-
-
+console.log(`file contents: ${logstr.length} [${logstr}]`);
