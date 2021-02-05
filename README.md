@@ -12,8 +12,18 @@ This bug seems to be specific to v12.16.1. The same code has been tried with 12.
 
 ### Testing
 
-I used `nvm` to enable Node.js v12.16.1 on the Windows platform and veriifed the same unwanted behavior of `fs.readSync()`. No other versions of Node.js have been tested *at this time*.
+I used `nvm` to enable Node.js v12.16.1 on the Windows platform and veriifed the same unwanted behavior of `fs.readSync()`. I also tested with other versions of Node.js, they have a similar bug. 
 
+Tested with these versions:
+ 
+* 14.15.4 - pass
+* 12.20.1 - pass
+* 12.19.0 - pass
+* 12.18.4 - pass
+* 12.16.1 - fail
+* 10.22.0 - fail
+ 
+ 
 ## Work Around
 
 The project where this was discovered needed to use the "sync" functions for file access. And my initial implementation used `fs.openSync()` to open the file and return a file descriptor.
@@ -45,15 +55,18 @@ if(demobug === true) {
     var fd = fs.openSync(path+filename, 'r');
     console.log(`opened fd(${fd}) ${path}${filename}`);
     var buff = Buffer.alloc(size+10);
-    var rdqty = fs.readSync(fd, buff, 'utf8');
+    var rdqty = fs.readSync(fd, buff);
+    // rdqty will always be zero
     console.log(`readSync - fd(${fd}) ${path}${filename} - returned: ${rdqty}`);
     fs.closeSync(fd);
     var logstr = buff.toString();
 } else {
     var logstr = fs.readFileSync(path+filename, 'utf8');         
     var rdqty = logstr.length;
-    console.log(`readFileSync - ${path}${filename} - size of data: ${rdqty}`);
+    console.log(`readFileSync - ${path}${filename} - size of data read from file: ${rdqty}`);
 }
+
+console.log(`file contents: ${logstr.length} [${logstr}]`);
 ```
 
 # Summary
