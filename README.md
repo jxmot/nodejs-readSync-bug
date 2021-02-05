@@ -8,8 +8,6 @@ The development of the application was done under Windows and Node.js v12.18.4, 
 
 When `fs.readSync()` is called with the appropriate parameters it does not read the file. No errors are generated and the only indication that something is wrong is that `fs.readSync()` returns `0` and not the quantity of bytes read.
 
-This bug seems to be specific to v12.16.1. The same code has been tried with 12.18.4 and no issues are seen.
-
 ### Testing
 
 I used `nvm` to enable Node.js v12.16.1 on the Windows platform and veriifed the same unwanted behavior of `fs.readSync()`. I also tested with other versions of Node.js, they have a similar bug. 
@@ -22,7 +20,6 @@ Tested with these versions:
 * 12.18.4 - pass
 * 12.16.1 - fail
 * 10.22.0 - fail
- 
  
 ## Work Around
 
